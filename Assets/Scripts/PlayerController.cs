@@ -8,16 +8,23 @@ public class PlayerController : MonoBehaviour
 {
     [HideInInspector] public InputManager inputManager;
     [SerializeField] private float turnSpeed = 1f;
-    public Character player;
+    [SerializeField] private float moveSpeedMult = 1.5f;
+    public MehdisCharacter player; // *****
     private Vector2 playerLastDir = Vector2.up;
     private Vector2 playerDir;
 
-    private void Awake()
+    // private void Awake()
+    // {
+    //     inputManager = GetComponent<InputManager>();
+    // }
+
+    private void Start()
     {
-        inputManager = GetComponent<InputManager>();
+        SetAsPlayer(ref player);
     }
 
-    private void Update()
+    // called by the MainController to calculate the player direction
+    public void Calculate()
     {
         // change players' direction based on input
         switch (inputManager.directionState)
@@ -36,11 +43,27 @@ public class PlayerController : MonoBehaviour
         }
 
         playerDir.Normalize();
-        Debug.Log(playerDir);
-        Debug.Log(playerDir.magnitude);
 
         player.moveDirection = playerDir;
 
         playerLastDir = playerDir;
+    }
+
+    // called when a new player is assigned
+    private void SetAsPlayer(ref MehdisCharacter character)
+    {
+        Debug.Log("Set");
+        //UnsetAsPlayer(ref player);
+        player = character;
+        player.currentMoveSpeed = player.baseMoveSpeed*moveSpeedMult;
+        player.glassesMeshObject.GetComponent<Renderer>().material.color = Color.red;
+    }
+
+    // called when a character is no longer the player
+    private void UnsetAsPlayer(ref MehdisCharacter character)
+    {
+        Debug.Log("Unset");
+        player.currentMoveSpeed = player.baseMoveSpeed;
+        player.glassesMeshObject.GetComponentInChildren<Renderer>().material.color = Color.white;
     }
 }
