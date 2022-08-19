@@ -21,4 +21,10 @@ public class EnemyController : MonoBehaviour
             character.moveDirection = newDir;
         }
     }
+
+    // changes the target transform (player)
+    public void ChangeTarget(Character character)
+    {
+        target = character.transform;
+    }
 }

@@ -52,18 +52,24 @@ public class PlayerController : MonoBehaviour
     // called when a new player is assigned
     private void SetAsPlayer(ref Character character)
     {
-        Debug.Log("Set");
-        //UnsetAsPlayer(ref player);
         player = character;
+        playerLastDir = player.moveDirection;
         player.currentMoveSpeed = player.baseMoveSpeed*moveSpeedMult;
         player.glassesMeshObject.GetComponent<Renderer>().material.color = Color.red;
     }
 
     // called when a character is no longer the player
-    private void UnsetAsPlayer(ref Character character)
+    private void UnsetAsPlayer()
     {
         Debug.Log("Unset");
         player.currentMoveSpeed = player.baseMoveSpeed;
         player.glassesMeshObject.GetComponentInChildren<Renderer>().material.color = Color.white;
+    }
+
+    // changes players' body
+    public void ChangeBody(Character character)
+    {
+        UnsetAsPlayer();
+        SetAsPlayer(ref character);
     }
 }
