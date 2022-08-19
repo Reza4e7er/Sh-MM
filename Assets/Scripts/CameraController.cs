@@ -5,16 +5,13 @@ using Cinemachine;
 public class CameraController : MonoBehaviour
 {
     public PlayerController pl;
-    CinemachineVirtualCamera freeLook;
-    public GameObject newe;
-
+    public CinemachineFreeLook freeLook;
     void Start()
     {
-        freeLook = GetComponent<CinemachineVirtualCamera>();
+        freeLook = GetComponent<CinemachineFreeLook>();
         
     }
 
-    // Update is called once per frame
     void Update()
     {
 
