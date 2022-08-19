@@ -7,12 +7,14 @@ public class Character : MonoBehaviour
     [HideInInspector] public Vector2 moveDirection = Vector2.up;
     public float baseMoveSpeed = 1f;
     public float currentMoveSpeed;
-    public GameObject glassesMeshObject;
+    // public GameObject glassesMeshObject;
     private Rigidbody _rigidbody;
+    public Animator animator;
 
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody>();
+        animator = GetComponentInChildren<Animator>();
 
         currentMoveSpeed = baseMoveSpeed;
     }

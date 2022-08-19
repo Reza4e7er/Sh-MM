@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float turnSpeed = 1f;
     [SerializeField] private float moveSpeedMult = 1.5f;
     public Character player; // *****
+    [SerializeField] private Canvas playerIndicator;
     private Vector2 playerLastDir = Vector2.up;
     private Vector2 playerDir;
 
@@ -53,17 +54,19 @@ public class PlayerController : MonoBehaviour
     private void SetAsPlayer(ref Character character)
     {
         player = character;
+        playerIndicator.transform.SetParent(player.transform);
+        player.animator.SetBool("Running", true);
         playerLastDir = player.moveDirection;
         player.currentMoveSpeed = player.baseMoveSpeed*moveSpeedMult;
-        player.glassesMeshObject.GetComponent<Renderer>().material.color = Color.red;
+        // player.glassesMeshObject.GetComponent<Renderer>().material.color = Color.red;
     }
 
     // called when a character is no longer the player
     private void UnsetAsPlayer()
     {
-        Debug.Log("Unset");
+        player.animator.SetBool("Running", false);
         player.currentMoveSpeed = player.baseMoveSpeed;
-        player.glassesMeshObject.GetComponentInChildren<Renderer>().material.color = Color.white;
+        // player.glassesMeshObject.GetComponentInChildren<Renderer>().material.color = Color.white;
     }
 
     // changes players' body
