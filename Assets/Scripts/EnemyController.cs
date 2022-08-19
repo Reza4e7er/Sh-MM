@@ -5,7 +5,7 @@ using UnityEngine;
 public class EnemyController : MonoBehaviour
 {
     public Transform target;
-    [SerializeField] private List<MehdisCharacter> characters;
+    [SerializeField] private List<Character> characters;
 
 
     // calculates directions for all of the characters (called by the MainController)
@@ -13,7 +13,7 @@ public class EnemyController : MonoBehaviour
     {
         Vector2 newDir = new Vector2();
 
-        foreach (MehdisCharacter character in characters)
+        foreach (Character character in characters)
         {
             newDir.x = target.position.x - character.transform.position.x;
             newDir.y = target.position.z - character.transform.position.z;
