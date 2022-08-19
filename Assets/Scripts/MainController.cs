@@ -8,13 +8,13 @@ using UnityEngine;
 public class MainController : MonoBehaviour
 {
     private PlayerController playerController;
-    private MehdisEnemyController enemyController;
+    private EnemyController enemyController;
     [SerializeField] private InputManager inputManager;
 
     private void Awake()
     {
         playerController = GetComponent<PlayerController>();
-        enemyController = GetComponent<MehdisEnemyController>();
+        enemyController = GetComponent<EnemyController>();
         playerController.inputManager = inputManager;
     }
 

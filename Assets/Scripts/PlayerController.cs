@@ -9,7 +9,7 @@ public class PlayerController : MonoBehaviour
     [HideInInspector] public InputManager inputManager;
     [SerializeField] private float turnSpeed = 1f;
     [SerializeField] private float moveSpeedMult = 1.5f;
-    public MehdisCharacter player; // *****
+    public Character player; // *****
     private Vector2 playerLastDir = Vector2.up;
     private Vector2 playerDir;
 
@@ -50,7 +50,7 @@ public class PlayerController : MonoBehaviour
     }
 
     // called when a new player is assigned
-    private void SetAsPlayer(ref MehdisCharacter character)
+    private void SetAsPlayer(ref Character character)
     {
         Debug.Log("Set");
         //UnsetAsPlayer(ref player);
@@ -60,7 +60,7 @@ public class PlayerController : MonoBehaviour
     }
 
     // called when a character is no longer the player
-    private void UnsetAsPlayer(ref MehdisCharacter character)
+    private void UnsetAsPlayer(ref Character character)
     {
         Debug.Log("Unset");
         player.currentMoveSpeed = player.baseMoveSpeed;

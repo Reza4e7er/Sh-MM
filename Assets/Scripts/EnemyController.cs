@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MehdisEnemyController : MonoBehaviour
+public class EnemyController : MonoBehaviour
 {
     public Transform target;
     [SerializeField] private List<MehdisCharacter> characters;

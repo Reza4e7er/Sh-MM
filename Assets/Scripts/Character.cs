@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MehdisCharacter : MonoBehaviour
+public class Character : MonoBehaviour
 {
     [HideInInspector] public Vector2 moveDirection = Vector2.up;
     public float baseMoveSpeed = 1f;
