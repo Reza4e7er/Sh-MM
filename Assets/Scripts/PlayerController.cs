@@ -55,6 +55,7 @@ public class PlayerController : MonoBehaviour
     {
         player = character;
         playerIndicator.transform.SetParent(player.transform);
+        playerIndicator.transform.localPosition = Vector3.zero;
         player.animator.SetBool("Running", true);
         playerLastDir = player.moveDirection;
         player.currentMoveSpeed = player.baseMoveSpeed*moveSpeedMult;
