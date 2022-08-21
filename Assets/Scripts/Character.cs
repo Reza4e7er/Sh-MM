@@ -10,6 +10,7 @@ public class Character : MonoBehaviour
     public float currentMoveSpeed;
     [SerializeField] private float maxHealth = 10f;
     [SerializeField] private float health;
+    public HealthBar healthBar;
     private Rigidbody _rigidbody;
     public Animator animator;
 
@@ -20,6 +21,11 @@ public class Character : MonoBehaviour
 
         currentMoveSpeed = baseMoveSpeed;
         health = maxHealth;
+    }
+
+    private void Start()
+    {
+        UpdateHealthBar();
     }
 
     private void Update()
@@ -34,13 +40,21 @@ public class Character : MonoBehaviour
     public void ApplyDamage(float damageAmount)
     {
         health -= damageAmount;
+        UpdateHealthBar();
         if (health<=0f)
             Die();
+    }
+
+    // updates this characters health bar
+    public void UpdateHealthBar()
+    {
+        healthBar.UpdateBar(health/maxHealth);
     }
 
     // called when the character dies
     public void Die()
     {
+        healthBar.UpdateBar(0f);
         gameObject.SetActive(false);
     }
 }

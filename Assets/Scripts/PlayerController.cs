@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
     [HideInInspector] public InputManager inputManager;
     [SerializeField] private float turnSpeed = 1f;
     [SerializeField] private float moveSpeedMult = 1.5f;
+    [SerializeField] private float healthBarSizeMult = 1.2f;
     public Character player; // *****
     [SerializeField] private Canvas playerIndicator;
     private Vector2 playerLastDir = Vector2.up;
@@ -59,7 +60,9 @@ public class PlayerController : MonoBehaviour
         player.animator.SetBool("Running", true);
         playerLastDir = player.moveDirection;
         player.currentMoveSpeed = player.baseMoveSpeed*moveSpeedMult;
-        // player.glassesMeshObject.GetComponent<Renderer>().material.color = Color.red;
+        player.healthBar.transform.localScale *= healthBarSizeMult;
+        player.healthBar.isPlayer = true;
+        player.UpdateHealthBar();
     }
 
     // called when a character is no longer the player
@@ -67,7 +70,10 @@ public class PlayerController : MonoBehaviour
     {
         player.animator.SetBool("Running", false);
         player.currentMoveSpeed = player.baseMoveSpeed;
-        // player.glassesMeshObject.GetComponentInChildren<Renderer>().material.color = Color.white;
+        player.healthBar.transform.localScale /= healthBarSizeMult;
+        player.healthBar.isPlayer = false;
+        player.UpdateHealthBar();
+        //player.Die();
     }
 
     // changes players' body
@@ -75,5 +81,10 @@ public class PlayerController : MonoBehaviour
     {
         UnsetAsPlayer();
         SetAsPlayer(ref character);
+    }
+
+    public void DamageTest()
+    {
+        player.ApplyDamage(2f);
     }
 }
