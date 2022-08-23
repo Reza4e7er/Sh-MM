@@ -7,7 +7,7 @@ using UnityEngine.Events;
 public class InputManager : MonoBehaviour
 {
     public DirectionState directionState = DirectionState.Forward;
-    [SerializeField] private Camera mainCamera;
+    [HideInInspector] public Camera mainCamera;
     private bool bodyChangeActive = false;
     public RectTransform[] areasToIgnore;
 
