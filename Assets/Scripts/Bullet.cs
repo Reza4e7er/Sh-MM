@@ -12,7 +12,6 @@ public class Bullet : MonoBehaviour
     {
         time1 = 0f;
         TimeFire = 1f;
-    
     }
 
     void Update()
@@ -26,11 +25,13 @@ public class Bullet : MonoBehaviour
     }
     public void Shoot()
     {
-       // Debug.Log("Shooting");
-        GameObject bullet = Instantiate(BulletPrefab,pl.player.transform.position , Quaternion.identity);
+        // Debug.Log("Shooting");
+        Vector3 FirePoint = pl.player.gameObject.transform.GetChild(0).gameObject.transform.position;
+        GameObject bullet = Instantiate(BulletPrefab, FirePoint, Quaternion.identity);
         bullet.GetComponent<Rigidbody>().AddForce(transform.forward * Speed);
     }
-    private void OnTriggerEnter(Collider other) {
-        
+    private void OnTriggerEnter(Collider other)
+    {
+
     }
 }

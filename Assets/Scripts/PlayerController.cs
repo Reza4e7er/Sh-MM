@@ -81,6 +81,7 @@ public class PlayerController : MonoBehaviour
     {
         UnsetAsPlayer();
         SetAsPlayer(ref character);
+        player.transform.tag = "Player";
     }
 
     public void DamageTest()
