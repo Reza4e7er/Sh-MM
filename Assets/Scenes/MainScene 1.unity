@@ -1706,11 +1706,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c32962d97823a8946a1ff054b44530e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerTag: Player
+  enemyTag: Enemy
   inputManager: {fileID: 0}
-  turnSpeed: 70
   moveSpeedMult: 1.7
   healthBarSizeMult: 1.2
-  player: {fileID: 1910641803}
+  playerCharcterScript: {fileID: 1910641803}
   playerIndicator: {fileID: 1327056327}
 --- !u!114 &823636628
 MonoBehaviour:
@@ -1840,6 +1841,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 1910641800}
+  maxDistanceToPlayerToAccack: 0.8
   characters:
   - {fileID: 1910641803}
   - {fileID: 955594889}
