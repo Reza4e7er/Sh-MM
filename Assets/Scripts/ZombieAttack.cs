@@ -12,7 +12,7 @@ public class ZombieAttack : MonoBehaviour, IAttack
 
     public void AttackAsEnemy()
     {
-        Character.animator.SetTrigger("Attacking");
+        Character.animator.SetTrigger("Attack");
         Character.isAttacking = true;
         FunctionTimer.Create(AttackAsEnemyEnd, attackTime);
     }
