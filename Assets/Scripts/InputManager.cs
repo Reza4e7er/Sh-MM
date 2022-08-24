@@ -51,7 +51,7 @@ public class InputManager : MonoBehaviour
             {
                 Ray ray = mainCamera.ScreenPointToRay(touch.position);
                 RaycastHit hitInfo;
-                if (Physics.Raycast(ray, out hitInfo) && hitInfo.collider.gameObject.tag=="Character")
+                if (Physics.Raycast(ray, out hitInfo) && hitInfo.collider.gameObject.tag=="Enemy")
                 {
                     Character character = hitInfo.collider.GetComponent<Character>();
                     if (OnCharacterRayCast!=null)

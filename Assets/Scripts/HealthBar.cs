@@ -25,12 +25,10 @@ public class HealthBar : MonoBehaviour
         foreBar.sizeDelta = new Vector2(backBar.rect.width*value, foreBar.sizeDelta.y);
         if (isPlayer)
         {
-            Debug.Log("pl");
             barImage.color = playerColor;
         }
         else
         {
-            Debug.Log("en");
             barImage.color = enemyColor;
         }
      }

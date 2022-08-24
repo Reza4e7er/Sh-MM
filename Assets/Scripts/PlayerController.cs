@@ -6,11 +6,15 @@ using UnityEngine;
 [RequireComponent(typeof(InputManager))]
 public class PlayerController : MonoBehaviour
 {
+    public string playerTag = "Player";
+    public string enemyTag = "Enemy";
     [HideInInspector] public InputManager inputManager;
-    [SerializeField] private float turnSpeed = 1f;
+    // [SerializeField] private float turnSpeed = 1f;
     [SerializeField] private float moveSpeedMult = 1.5f;
     [SerializeField] private float healthBarSizeMult = 1.2f;
-    public Character player; // *****
+
+    [SerializeField] private Character playerCharcterScript;
+    [SerializeField] public static Character player; // *****
     [SerializeField] private Canvas playerIndicator;
     private Vector2 playerLastDir = Vector2.up;
     private Vector2 playerDir;
@@ -22,6 +26,7 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
+        PlayerController.player = playerCharcterScript;
         SetAsPlayer(ref player);
     }
 
@@ -57,10 +62,18 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    // applies damage to the player
+    public static void ApplyDamage(float damageAmount)
+    {
+        player.ApplyDamage(damageAmount);
+    }
+
     // called when a new player is assigned
     private void SetAsPlayer(ref Character character)
     {
         player = character;
+        player.gameObject.tag = playerTag;
+        player.isPlayer = true;
         playerIndicator.transform.SetParent(player.transform);
         playerIndicator.transform.localPosition = Vector3.zero;
         player.animator.SetBool("Running", true);
@@ -74,6 +87,8 @@ public class PlayerController : MonoBehaviour
     // called when a character is no longer the player
     private void UnsetAsPlayer()
     {
+        player.gameObject.tag = enemyTag;
+        player.isPlayer = false;
         player.animator.SetBool("Running", false);
         player.currentMoveSpeed = player.baseMoveSpeed;
         player.healthBar.transform.localScale /= healthBarSizeMult;
