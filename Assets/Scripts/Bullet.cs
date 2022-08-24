@@ -6,7 +6,7 @@ public class Bullet : MonoBehaviour
 {
     public float Speed;
     public GameObject BulletPrefab;
-    public PlayerController pl;
+    //public PlayerController pl;
     float time1, TimeFire;
     void Start()
     {
@@ -26,7 +26,7 @@ public class Bullet : MonoBehaviour
     public void Shoot()
     {
         // Debug.Log("Shooting");
-        Vector3 FirePoint = pl.player.gameObject.transform.GetChild(0).gameObject.transform.position;
+        Vector3 FirePoint = PlayerController.player.gameObject.transform.GetChild(0).gameObject.transform.position;
         GameObject bullet = Instantiate(BulletPrefab, FirePoint, Quaternion.identity);
         // bullet.GetComponent<Rigidbody>().AddForce(transform.forward * Speed);
         bullet.GetComponent<Rigidbody>().AddForce(FirePoint*Speed);
