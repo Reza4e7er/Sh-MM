@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using CodeMonkey.Utils;
 
 [RequireComponent(typeof(InputManager))]
 public class PlayerController : MonoBehaviour
@@ -10,6 +10,9 @@ public class PlayerController : MonoBehaviour
     public string enemyTag = "Enemy";
     [HideInInspector] public InputManager inputManager;
     // [SerializeField] private float turnSpeed = 1f;
+
+    public static bool isInvincible = false;
+    public static float invincibleTime = 3f;
     [SerializeField] private float moveSpeedMult = 1.5f;
     [SerializeField] private float healthBarSizeMult = 1.2f;
 
@@ -65,12 +68,16 @@ public class PlayerController : MonoBehaviour
     // applies damage to the player
     public static void ApplyDamage(float damageAmount)
     {
-        player.ApplyDamage(damageAmount);
+        if (!isInvincible)
+            player.ApplyDamage(damageAmount);
     }
 
     // called when a new player is assigned
     private void SetAsPlayer(ref Character character)
     {
+        isInvincible = true;
+        FunctionTimer.Create(()=>{isInvincible=false;}, invincibleTime);
+
         player = character;
         player.gameObject.tag = playerTag;
         player.isPlayer = true;
