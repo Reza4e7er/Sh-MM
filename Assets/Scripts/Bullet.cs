@@ -28,7 +28,8 @@ public class Bullet : MonoBehaviour
         // Debug.Log("Shooting");
         Vector3 FirePoint = pl.player.gameObject.transform.GetChild(0).gameObject.transform.position;
         GameObject bullet = Instantiate(BulletPrefab, FirePoint, Quaternion.identity);
-        bullet.GetComponent<Rigidbody>().AddForce(transform.forward * Speed);
+        // bullet.GetComponent<Rigidbody>().AddForce(transform.forward * Speed);
+        bullet.GetComponent<Rigidbody>().AddForce(FirePoint*Speed);
     }
     private void OnTriggerEnter(Collider other)
     {
