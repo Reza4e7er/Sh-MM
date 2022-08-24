@@ -29,26 +29,32 @@ public class PlayerController : MonoBehaviour
     public void Calculate()
     {
         // change players' direction based on input
-        switch (inputManager.directionState)
+        // switch (inputManager.directionState)
+        // {
+        //     case DirectionState.Forward:
+        //         playerDir = playerLastDir;
+        //         break;
+        //     case DirectionState.Right:
+        //         playerDir = Quaternion.Euler(0,0,turnSpeed*Time.deltaTime)*playerLastDir;
+        //         break;
+        //     case DirectionState.Left:
+        //         playerDir = Quaternion.Euler(0,0,-turnSpeed*Time.deltaTime)*playerLastDir;
+        //         break;
+        //     default:
+        //         break;
+        // }
+        playerDir = inputManager.inputVector;
+        //playerDir.Normalize();
+
+        if (playerDir.magnitude!=0)
         {
-            case DirectionState.Forward:
-                playerDir = playerLastDir;
-                break;
-            case DirectionState.Right:
-                playerDir = Quaternion.Euler(0,0,turnSpeed*Time.deltaTime)*playerLastDir;
-                break;
-            case DirectionState.Left:
-                playerDir = Quaternion.Euler(0,0,-turnSpeed*Time.deltaTime)*playerLastDir;
-                break;
-            default:
-                break;
+            player.moveDirection = playerDir;
+            playerLastDir = playerDir;
         }
-
-        playerDir.Normalize();
-
-        player.moveDirection = playerDir;
-
-        playerLastDir = playerDir;
+        else
+        {
+            player.moveDirection = playerLastDir;
+        }
     }
 
     // called when a new player is assigned

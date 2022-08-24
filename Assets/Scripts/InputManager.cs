@@ -6,8 +6,10 @@ using UnityEngine.Events;
 
 public class InputManager : MonoBehaviour
 {
-    public DirectionState directionState = DirectionState.Forward;
+    //public DirectionState directionState = DirectionState.Forward;
+    [HideInInspector] public Vector2 inputVector = new Vector2();
     [HideInInspector] public Camera mainCamera;
+    [SerializeField] private FixedJoystick joystick;
     private bool bodyChangeActive = false;
     public RectTransform[] areasToIgnore;
 
@@ -20,7 +22,7 @@ public class InputManager : MonoBehaviour
 
     private void Update()
     {
-        directionState = DirectionState.Forward;
+        //directionState = DirectionState.Forward;
 
         if (Input.touchCount>0)
         {
@@ -32,14 +34,18 @@ public class InputManager : MonoBehaviour
             if (!bodyChangeActive)
             {
                 // turn
-                if (touch.position.x>=Screen.currentResolution.width/2)
-                {
-                    directionState = DirectionState.Left;
-                }
-                else
-                {
-                    directionState = DirectionState.Right;
-                }
+                // if (touch.position.x>=Screen.currentResolution.width/2)
+                // {
+                //     directionState = DirectionState.Left;
+                // }
+                // else
+                // {
+                //     directionState = DirectionState.Right;
+                // }
+
+                inputVector.x = -joystick.Vertical;
+                inputVector.y = joystick.Horizontal;
+                inputVector.Normalize();
             }
             else
             {
