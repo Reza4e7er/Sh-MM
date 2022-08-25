@@ -6,6 +6,7 @@ public class BulletShooter : MonoBehaviour
 {
     public float speed;
     public GameObject BulletPrefab;
+    [SerializeField] private Transform parentTransform;
     //public PlayerController pl;
     float time1, TimeFire;
     void Start()
@@ -27,7 +28,7 @@ public class BulletShooter : MonoBehaviour
     {
         // Debug.Log("Shooting");
         Transform firePoint = PlayerController.player.transform.GetChild(0);
-        GameObject bullet = Instantiate(BulletPrefab, firePoint.position, firePoint.rotation);
+        GameObject bullet = Instantiate(BulletPrefab, firePoint.position, firePoint.rotation, parentTransform);
         // bullet.GetComponent<Rigidbody>().AddForce(transform.forward * speed);
         bullet.GetComponent<Rigidbody>().AddForce(firePoint.forward*speed);
     }
