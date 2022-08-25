@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bullet : MonoBehaviour
+public class BulletShooter : MonoBehaviour
 {
-    public float Speed;
+    public float speed;
     public GameObject BulletPrefab;
     //public PlayerController pl;
     float time1, TimeFire;
@@ -16,7 +16,7 @@ public class Bullet : MonoBehaviour
 
     void Update()
     {
-        time1 += 1 * Time.deltaTime;
+        time1 += Time.deltaTime;
         if (time1 > TimeFire)
         {
             time1 = 0f;
@@ -26,10 +26,10 @@ public class Bullet : MonoBehaviour
     public void Shoot()
     {
         // Debug.Log("Shooting");
-        Vector3 FirePoint = PlayerController.player.gameObject.transform.GetChild(0).gameObject.transform.position;
-        GameObject bullet = Instantiate(BulletPrefab, FirePoint, Quaternion.identity);
-        // bullet.GetComponent<Rigidbody>().AddForce(transform.forward * Speed);
-        bullet.GetComponent<Rigidbody>().AddForce(FirePoint*Speed);
+        Transform firePoint = PlayerController.player.transform.GetChild(0);
+        GameObject bullet = Instantiate(BulletPrefab, firePoint.position, firePoint.rotation);
+        // bullet.GetComponent<Rigidbody>().AddForce(transform.forward * speed);
+        bullet.GetComponent<Rigidbody>().AddForce(firePoint.forward*speed);
     }
     private void OnTriggerEnter(Collider other)
     {
