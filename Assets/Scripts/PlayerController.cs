@@ -12,7 +12,7 @@ public class PlayerController : MonoBehaviour
     // [SerializeField] private float turnSpeed = 1f;
 
     public static bool isInvincible = false;
-    public static float invincibleTime = 3f;
+    public static float invincibleTime = 2f;
     [SerializeField] private float moveSpeedMult = 1.5f;
     [SerializeField] private float healthBarSizeMult = 1.2f;
 

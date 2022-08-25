@@ -18,7 +18,6 @@ public class Bullet : MonoBehaviour
     {
         if (coll.gameObject.tag=="Enemy")
         {
-            Debug.Log("sthshsh");
             coll.GetComponent<Character>().ApplyDamage(damage);
 
             penitration--;

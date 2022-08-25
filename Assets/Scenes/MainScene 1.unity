@@ -451,6 +451,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4964b5c9da2d5804baa51a7480cf01c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyController: {fileID: 823636631}
   minPlayerDistance: 12
   maxPlayerDistance: 15
   parentTransform: {fileID: 1653149959}

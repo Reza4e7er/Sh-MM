@@ -6,7 +6,7 @@ public class EnemyController : MonoBehaviour
 {
     public Transform target;
     [SerializeField] private float maxDistanceToPlayerToAccack = 1f;
-    [SerializeField] private List<Character> characters;
+    public List<Character> characters;
 
 
     // calculates directions for all of the characters (called by the MainController)

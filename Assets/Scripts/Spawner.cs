@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Spawner : MonoBehaviour
 {
+    [SerializeField] private EnemyController enemyController;
     [SerializeField] private float minPlayerDistance=12f, maxPlayerDistance=15f;
     [SerializeField] private Transform parentTransform;
     [SerializeField] private float spawnInterval = 5f;
@@ -47,7 +48,7 @@ public class Spawner : MonoBehaviour
                 spawnLocation.y = 0f;
                 spawnLocation.x = (UnityEngine.Random.Range(0,2)==0 ? 1:-1) * UnityEngine.Random.Range(minPlayerDistance, maxPlayerDistance);
                 spawnLocation.z = (UnityEngine.Random.Range(0,2)==0 ? 1:-1) * UnityEngine.Random.Range(minPlayerDistance, maxPlayerDistance);
-                Instantiate(spawnObject.gameObject, spawnLocation, Quaternion.identity, parentTransform);
+                enemyController.characters.Add(Instantiate(spawnObject.gameObject, spawnLocation, Quaternion.identity, parentTransform).GetComponent<Character>());
             }
         }
     }
