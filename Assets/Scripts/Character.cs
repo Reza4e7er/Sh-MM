@@ -2,9 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Character : MonoBehaviour
+public class Character : MonoBehaviour, IPoolable
 {
     [HideInInspector] public Vector2 moveDirection = Vector2.up;
+    [SerializeField] private int poolingID;
+    public int PoolingID{ get; set;}
     public bool isPlayer = false;
     public bool isAttacking = false;
     public float baseMoveSpeed = 1f;
@@ -24,11 +26,12 @@ public class Character : MonoBehaviour
         attackScript = GetComponent<IAttack>();
         attackScript.Character = (Character) this;
 
+        PoolingID = poolingID;
         currentMoveSpeed = baseMoveSpeed;
         health = maxHealth;
     }
 
-    private void Start()
+    private void OnEnable()
     {
         UpdateHealthBar();
     }
@@ -73,6 +76,7 @@ public class Character : MonoBehaviour
     public void Die()
     {
         healthBar.UpdateBar(0f);
-        gameObject.SetActive(false);
+        //gameObject.SetActive(false);
+        PoolsManager.Instance.ReturnToPool(gameObject, poolingID);
     }
 }

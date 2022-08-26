@@ -14,7 +14,7 @@ public class HealthBar : MonoBehaviour
      public bool isPlayer = false;
      [SerializeField] Color playerColor, enemyColor;
 
-     private void Awake()
+     private void OnEnable()
      {
         barImage = foreBar.GetComponent<Image>();
      }
