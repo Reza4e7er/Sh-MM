@@ -14,9 +14,17 @@ public class HealthBar : MonoBehaviour
      public bool isPlayer = false;
      [SerializeField] Color playerColor, enemyColor;
 
-     private void OnEnable()
+     private void Awake()
      {
-        barImage = foreBar.GetComponent<Image>();
+         barImage = foreBar.GetComponent<Image>();
+         if (barImage==null)
+               Debug.Log("Null0 :(");
+     }
+
+     // reassigns components
+     public void ResetComponents()
+     {
+         barImage = foreBar.GetComponent<Image>();
      }
 
      // changes the foreBar based on the value
@@ -29,6 +37,9 @@ public class HealthBar : MonoBehaviour
         }
         else
         {
+            //barImage = foreBar.GetComponent<Image>();
+            if (barImage==null)
+               Debug.Log("Null2 :(");
             barImage.color = enemyColor;
         }
      }

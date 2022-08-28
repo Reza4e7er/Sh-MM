@@ -5,4 +5,6 @@ using UnityEngine;
 public interface IPoolable
 {
     int PoolingID{ get; set;}
+    GameObject ThisGameObject{get;}
+    void ResetComponents();
 }

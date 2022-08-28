@@ -7,6 +7,7 @@ public class Bullet : MonoBehaviour, IPoolable
 {
     [SerializeField] private int poolingID;
     public int PoolingID{get; set;}
+    public GameObject ThisGameObject{get{return gameObject;}}
     [SerializeField] private float damage = 3f;
     [SerializeField] private int penitration = 1;
     [SerializeField] private float activeTime = 10f;
@@ -17,6 +18,8 @@ public class Bullet : MonoBehaviour, IPoolable
         PoolingID = poolingID;
         time = 0f;
     }
+
+    public void ResetComponents(){}
 
     private void Update()
     {

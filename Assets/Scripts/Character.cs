@@ -7,6 +7,7 @@ public class Character : MonoBehaviour, IPoolable
     [HideInInspector] public Vector2 moveDirection = Vector2.up;
     [SerializeField] private int poolingID;
     public int PoolingID{ get; set;}
+    public GameObject ThisGameObject{get{return gameObject;}}
     public bool isPlayer = false;
     public bool isAttacking = false;
     public float baseMoveSpeed = 1f;
@@ -22,17 +23,30 @@ public class Character : MonoBehaviour, IPoolable
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody>();
-        animator = GetComponentInChildren<Animator>();
+        animator = GetComponentInChildren<Animator>(true);
         attackScript = GetComponent<IAttack>();
         attackScript.Character = (Character) this;
 
         PoolingID = poolingID;
-        currentMoveSpeed = baseMoveSpeed;
-        health = maxHealth;
     }
 
     private void OnEnable()
     {
+        currentMoveSpeed = baseMoveSpeed;
+        health = maxHealth;
+        UpdateHealthBar();
+    }
+
+    // reassigns components
+    public void ResetComponents()
+    {
+        _rigidbody = GetComponent<Rigidbody>();
+        animator = GetComponentInChildren<Animator>(true);
+        attackScript = GetComponent<IAttack>();
+        attackScript.Character = (Character) this;
+
+        currentMoveSpeed = baseMoveSpeed;
+        health = maxHealth;
         UpdateHealthBar();
     }
 
