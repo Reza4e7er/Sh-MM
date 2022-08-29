@@ -24,7 +24,8 @@ public class HealthBar : MonoBehaviour
      // reassigns components
      public void ResetComponents()
      {
-         barImage = foreBar.GetComponent<Image>();
+        //Debug.Log("reset");
+        barImage = foreBar.GetComponent<Image>();
      }
 
      // changes the foreBar based on the value

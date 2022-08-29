@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GameObjectPool : MonoBehaviour
 {
-    [SerializeField] private IPoolable prefab;
+    [SerializeField] private GameObject prefab;
     private Queue<GameObject> objects = new Queue<GameObject>();
 
 
@@ -25,8 +25,8 @@ public class GameObjectPool : MonoBehaviour
     {
         for (int i=0; i<count; i++)
         {
-            GameObject obj = Instantiate(prefab.ThisGameObject);
-            obj.GetComponent<IPoolable>().ResetComponents();
+            GameObject obj = Instantiate(prefab);
+            //obj.GetComponent<IPoolable>().ResetComponents();
             obj.gameObject.SetActive(false);
             objects.Enqueue(obj);
         }

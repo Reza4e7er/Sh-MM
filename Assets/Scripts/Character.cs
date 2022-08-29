@@ -27,6 +27,8 @@ public class Character : MonoBehaviour, IPoolable
         attackScript = GetComponent<IAttack>();
         attackScript.Character = (Character) this;
 
+        healthBar.ResetComponents();
+
         PoolingID = poolingID;
     }
 
@@ -45,6 +47,7 @@ public class Character : MonoBehaviour, IPoolable
         attackScript = GetComponent<IAttack>();
         attackScript.Character = (Character) this;
 
+        healthBar.ResetComponents();
         currentMoveSpeed = baseMoveSpeed;
         health = maxHealth;
         UpdateHealthBar();
