@@ -1,9 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+public enum EnemyType
+{
+    Zombie,
+    Troll,
+    Org
+}
 public class Character : MonoBehaviour
 {
+    public EnemyType enemyType;
     [HideInInspector] public Vector2 moveDirection = Vector2.up;
     public bool isPlayer = false;
     public bool isAttacking = false;
