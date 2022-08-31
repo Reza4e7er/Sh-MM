@@ -48,7 +48,15 @@ public class Spawner : MonoBehaviour
                 spawnLocation.y = 0f;
                 spawnLocation.x = (UnityEngine.Random.Range(0,2)==0 ? 1:-1) * UnityEngine.Random.Range(minPlayerDistance, maxPlayerDistance);
                 spawnLocation.z = (UnityEngine.Random.Range(0,2)==0 ? 1:-1) * UnityEngine.Random.Range(minPlayerDistance, maxPlayerDistance);
-                enemyController.characters.Add(Instantiate(spawnObject.gameObject, spawnLocation, Quaternion.identity, parentTransform).GetComponent<Character>());
+
+                bool shouldAdd;
+                GameObject obj = PoolsManager.Instance.Get(spawnObject.poolingID, out shouldAdd);
+                obj.SetActive(true);
+                obj.transform.position = spawnLocation;
+                obj.transform.SetParent(parentTransform);
+                if (shouldAdd)
+                    enemyController.characters.Add(obj.GetComponent<Character>());
+                //enemyController.characters.Add(Instantiate(spawnObject.gameObject, spawnLocation, Quaternion.identity, parentTransform).GetComponent<Character>());
             }
         }
     }
@@ -58,6 +66,7 @@ public class Spawner : MonoBehaviour
     public struct SpawnObject
     {
         public GameObject gameObject;
+        public int poolingID;
         public float spawnChance;
     }
 }

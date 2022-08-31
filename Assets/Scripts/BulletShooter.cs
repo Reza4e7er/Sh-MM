@@ -26,14 +26,12 @@ public class BulletShooter : MonoBehaviour
     }
     public void Shoot()
     {
-        // Debug.Log("Shooting");
         Transform firePoint = PlayerController.player.transform.GetChild(0);
-        GameObject bullet = Instantiate(BulletPrefab, firePoint.position, firePoint.rotation, parentTransform);
-        // bullet.GetComponent<Rigidbody>().AddForce(transform.forward * speed);
+        Bullet bullet = PoolsManager.Instance.Get(0, out bool newObjectInstantiated).GetComponent<Bullet>();
+        bullet.gameObject.SetActive(true);
+        bullet.transform.position = firePoint.position;
+        bullet.transform.rotation = firePoint.rotation;
+        bullet.transform.SetParent(parentTransform);
         bullet.GetComponent<Rigidbody>().AddForce(firePoint.forward*speed);
-    }
-    private void OnTriggerEnter(Collider other)
-    {
-
     }
 }

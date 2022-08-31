@@ -16,6 +16,15 @@ public class HealthBar : MonoBehaviour
 
      private void Awake()
      {
+         barImage = foreBar.GetComponent<Image>();
+         if (barImage==null)
+               Debug.Log("Null0 :(");
+     }
+
+     // reassigns components
+     public void ResetComponents()
+     {
+        //Debug.Log("reset");
         barImage = foreBar.GetComponent<Image>();
      }
 
@@ -29,6 +38,9 @@ public class HealthBar : MonoBehaviour
         }
         else
         {
+            //barImage = foreBar.GetComponent<Image>();
+            if (barImage==null)
+               Debug.Log("Null2 :(");
             barImage.color = enemyColor;
         }
      }

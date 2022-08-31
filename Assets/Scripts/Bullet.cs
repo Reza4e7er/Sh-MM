@@ -3,15 +3,29 @@ using System.Collections.Generic;
 using UnityEngine;
 using CodeMonkey.Utils;
 
-public class Bullet : MonoBehaviour
+public class Bullet : MonoBehaviour, IPoolable
 {
+    [SerializeField] private int poolingID;
+    public int PoolingID{get; set;}
+    public GameObject ThisGameObject{get{return gameObject;}}
     [SerializeField] private float damage = 3f;
     [SerializeField] private int penitration = 1;
     [SerializeField] private float activeTime = 10f;
+    private float time = 0f;
 
     private void OnEnable()
     {
-        FunctionTimer.Create(DestroyBullet, activeTime);
+        PoolingID = poolingID;
+        time = 0f;
+    }
+
+    public void ResetComponents(){}
+
+    private void Update()
+    {
+        time += Time.deltaTime;
+        if (time>=activeTime)
+            DestroyBullet();
     }
 
     private void OnTriggerEnter(Collider coll)
@@ -29,6 +43,6 @@ public class Bullet : MonoBehaviour
     // called whenever bullet should be disabled
     private void DestroyBullet()
     {
-        gameObject.SetActive(false);
+        PoolsManager.Instance.ReturnToPool(gameObject, poolingID);
     }
 }

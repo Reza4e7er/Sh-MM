@@ -1,16 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-public enum EnemyType
+
+public class Character : MonoBehaviour, IPoolable
 {
-    Zombie,
-    Troll,
-    Org
-}
-public class Character : MonoBehaviour
-{
-    public EnemyType enemyType;
     [HideInInspector] public Vector2 moveDirection = Vector2.up;
+    [SerializeField] private int poolingID;
+    public int PoolingID{ get; set;}
+    public GameObject ThisGameObject{get{return gameObject;}}
     public bool isPlayer = false;
     public bool isAttacking = false;
     public float baseMoveSpeed = 1f;
@@ -26,16 +23,33 @@ public class Character : MonoBehaviour
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody>();
-        animator = GetComponentInChildren<Animator>();
+        animator = GetComponentInChildren<Animator>(true);
         attackScript = GetComponent<IAttack>();
         attackScript.Character = (Character) this;
 
-        currentMoveSpeed = baseMoveSpeed;
-        health = maxHealth;
+        healthBar.ResetComponents();
+
+        PoolingID = poolingID;
     }
 
-    private void Start()
+    private void OnEnable()
     {
+        currentMoveSpeed = baseMoveSpeed;
+        health = maxHealth;
+        UpdateHealthBar();
+    }
+
+    // reassigns components
+    public void ResetComponents()
+    {
+        _rigidbody = GetComponent<Rigidbody>();
+        animator = GetComponentInChildren<Animator>(true);
+        attackScript = GetComponent<IAttack>();
+        attackScript.Character = (Character) this;
+
+        healthBar.ResetComponents();
+        currentMoveSpeed = baseMoveSpeed;
+        health = maxHealth;
         UpdateHealthBar();
     }
 
@@ -79,6 +93,7 @@ public class Character : MonoBehaviour
     public void Die()
     {
         healthBar.UpdateBar(0f);
-        gameObject.SetActive(false);
+        //gameObject.SetActive(false);
+        PoolsManager.Instance.ReturnToPool(gameObject, poolingID);
     }
 }
