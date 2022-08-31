@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -22,6 +23,10 @@ public class PlayerController : MonoBehaviour
     private Vector2 playerLastDir = Vector2.up;
     private Vector2 playerDir;
 
+    private Action Ability1Action;
+    private Action Ability2Action;
+
+
     // private void Awake()
     // {
     //     inputManager = GetComponent<InputManager>();
@@ -31,26 +36,14 @@ public class PlayerController : MonoBehaviour
     {
         PlayerController.player = playerCharcterScript;
         SetAsPlayer(ref player);
+
+        Ability1Action = ZombieAbility1;
+        Ability2Action = ZombieAbility2;
     }
 
     // called by the MainController to calculate the player direction
     public void Calculate()
     {
-        // change players' direction based on input
-        // switch (inputManager.directionState)
-        // {
-        //     case DirectionState.Forward:
-        //         playerDir = playerLastDir;
-        //         break;
-        //     case DirectionState.Right:
-        //         playerDir = Quaternion.Euler(0,0,turnSpeed*Time.deltaTime)*playerLastDir;
-        //         break;
-        //     case DirectionState.Left:
-        //         playerDir = Quaternion.Euler(0,0,-turnSpeed*Time.deltaTime)*playerLastDir;
-        //         break;
-        //     default:
-        //         break;
-        // }
         playerDir = inputManager.inputVector;
         //playerDir.Normalize();
 
@@ -76,7 +69,7 @@ public class PlayerController : MonoBehaviour
     private void SetAsPlayer(ref Character character)
     {
         isInvincible = true;
-        FunctionTimer.Create(()=>{isInvincible=false;}, invincibleTime);
+        FunctionTimer.Create(()=>{isInvincible=false;}, invincibleTime, "Invincible");
 
         player = character;
         player.gameObject.tag = playerTag;
@@ -115,5 +108,42 @@ public class PlayerController : MonoBehaviour
     public void DamageTest()
     {
         player.ApplyDamage(2f);
+    }
+
+
+    //******Abilities******
+    [Header("Abilities")]
+    [Header("Zombie")]
+    [SerializeField] private float a1InvincibilityTime = 5f;
+    [SerializeField] private float a2SpeedMult = 2f;
+    [SerializeField] private float a2SpeedMultTime = 5f;
+
+    // calls the first ability
+    public void Ability1()
+    {
+        if (Ability1Action!=null)
+            Ability1Action();
+    }
+
+    // calls the second ability
+    public void Ability2()
+    {
+        if (Ability2Action!=null)
+            Ability2Action();
+    }
+
+
+    // makes the player invincible for some time
+    public void ZombieAbility1()
+    {
+        isInvincible = true;
+        FunctionTimer.Create(()=>{isInvincible=false;}, a1InvincibilityTime, "Invincible");
+    }
+
+    // makes the player faster for some time
+    public void ZombieAbility2()
+    {
+        player.currentMoveSpeed *= a2SpeedMult;
+        FunctionTimer.Create(()=>{player.currentMoveSpeed/=a2SpeedMult;}, a2SpeedMultTime, "Invincible");
     }
 }
