@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour
 
     public static bool isInvincible = false;
     public static float invincibleTime = 2f;
+    private CharacterType currentPlayerType;
     [SerializeField] private float moveSpeedMult = 1.5f;
     [SerializeField] private float healthBarSizeMult = 1.2f;
 
@@ -26,15 +27,18 @@ public class PlayerController : MonoBehaviour
     private Action Ability1Action;
     private Action Ability2Action;
 
+    private BulletShooter bulletShooter;
 
-    // private void Awake()
-    // {
-    //     inputManager = GetComponent<InputManager>();
-    // }
+
+    private void Awake()
+    {
+        bulletShooter = GetComponent<BulletShooter>();
+    }
 
     private void Start()
     {
         abilitySets.Add(new ZombieAbilitySet());
+        abilitySets.Add(new GolemAbilitySet());
 
         PlayerController.player = playerCharcterScript;
         SetAsPlayer(ref player);
@@ -104,6 +108,18 @@ public class PlayerController : MonoBehaviour
     {
         UnsetAsPlayer();
         SetAsPlayer(ref character);
+        if (currentPlayerType!=character.characterType)
+        {
+            currentPlayerType = character.characterType;
+            Debug.Log("changed types:"+currentPlayerType.ToString());
+            Ability1Action = abilitySets[(int)currentPlayerType].Ability1;
+            Ability2Action = abilitySets[(int)currentPlayerType].Ability2;
+
+            if (currentPlayerType==CharacterType.Zombie)
+                bulletShooter.canShoot = true;
+            else
+                bulletShooter.canShoot = false;
+        }
         player.transform.tag = "Player";
     }
 

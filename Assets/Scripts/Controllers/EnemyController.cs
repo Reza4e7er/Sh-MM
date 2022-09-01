@@ -5,7 +5,7 @@ using UnityEngine;
 public class EnemyController : MonoBehaviour
 {
     public Transform target;
-    [SerializeField] private float maxDistanceToPlayerToAccack = 1f;
+    //[SerializeField] private float maxDistanceToPlayerToAccack = 1f;
     public List<Character> characters;
 
 
@@ -18,7 +18,7 @@ public class EnemyController : MonoBehaviour
         {
             newDir.x = target.position.x - character.transform.position.x;
             newDir.y = target.position.z - character.transform.position.z;
-            if (!character.isPlayer && !character.isAttacking && newDir.magnitude<=maxDistanceToPlayerToAccack)
+            if (!character.isPlayer && !character.isAttacking && newDir.magnitude<=character.attackRange)
                 character.Attack();
             newDir.Normalize();
             character.moveDirection = newDir;
