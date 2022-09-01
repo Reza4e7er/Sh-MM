@@ -34,11 +34,13 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
+        abilitySets.Add(new ZombieAbilitySet());
+
         PlayerController.player = playerCharcterScript;
         SetAsPlayer(ref player);
 
-        Ability1Action = ZombieAbility1;
-        Ability2Action = ZombieAbility2;
+        Ability1Action = abilitySets[0].Ability1;
+        Ability2Action = abilitySets[0].Ability2;
     }
 
     // called by the MainController to calculate the player direction
@@ -112,11 +114,9 @@ public class PlayerController : MonoBehaviour
 
 
     //******Abilities******
-    [Header("Abilities")]
-    [Header("Zombie")]
-    [SerializeField] private float a1InvincibilityTime = 5f;
-    [SerializeField] private float a2SpeedMult = 2f;
-    [SerializeField] private float a2SpeedMultTime = 5f;
+    //[Header("Abilities")]
+    private List<IAbilitySet> abilitySets = new List<IAbilitySet>();
+    
 
     // calls the first ability
     public void Ability1()
@@ -130,20 +130,5 @@ public class PlayerController : MonoBehaviour
     {
         if (Ability2Action!=null)
             Ability2Action();
-    }
-
-
-    // makes the player invincible for some time
-    public void ZombieAbility1()
-    {
-        isInvincible = true;
-        FunctionTimer.Create(()=>{isInvincible=false;}, a1InvincibilityTime, "Invincible");
-    }
-
-    // makes the player faster for some time
-    public void ZombieAbility2()
-    {
-        player.currentMoveSpeed *= a2SpeedMult;
-        FunctionTimer.Create(()=>{player.currentMoveSpeed/=a2SpeedMult;}, a2SpeedMultTime, "Invincible");
     }
 }
