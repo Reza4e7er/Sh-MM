@@ -190,7 +190,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damageAmount: 4
-  attackTime: 3
+  attackTime: 2
 --- !u!1 &5857592101781303026
 GameObject:
   m_ObjectHideFlags: 0
