@@ -28,26 +28,24 @@ public class InputManager : MonoBehaviour
         {
             Touch touch = Input.GetTouch(0);
 
-            // check if touch should be acounted
-            // not implemented!
+            // check if touch should be ignored
+            bool ignoreTouch = false;
+            foreach (RectTransform rect in areasToIgnore)
+            {
+                if (RectTransformUtility.RectangleContainsScreenPoint(rect, touch.position))
+                {
+                    ignoreTouch = true;
+                    break;
+                }
+            }
 
             if (!bodyChangeActive)
             {
-                // turn
-                // if (touch.position.x>=Screen.currentResolution.width/2)
-                // {
-                //     directionState = DirectionState.Left;
-                // }
-                // else
-                // {
-                //     directionState = DirectionState.Right;
-                // }
-
                 inputVector.x = -joystick.Vertical;
                 inputVector.y = joystick.Horizontal;
                 inputVector.Normalize();
             }
-            else
+            else if (!ignoreTouch)
             {
                 Ray ray = mainCamera.ScreenPointToRay(touch.position);
                 RaycastHit hitInfo;
