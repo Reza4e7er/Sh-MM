@@ -588,9 +588,11 @@ MonoBehaviour:
   enemyController: {fileID: 823636631}
   minPlayerDistance: 12
   maxPlayerDistance: 15
-  parentTransform: {fileID: 1653149959}
+  parentTransforms:
+  - {fileID: 1653149959}
+  - {fileID: 455778309}
   spawnInterval: 5
-  spawnIntervalMultiplier: 0.95
+  spawnIntervalMultiplier: 0.98
   spawnList:
   - gameObject: {fileID: 5432898286460850505, guid: 6829c2787b5eb044da9ea14512e700fa, type: 3}
     poolingID: 1
@@ -2217,6 +2219,8 @@ MonoBehaviour:
   - {fileID: 1807268819}
   - {fileID: 1017864982}
   - {fileID: 322613820}
+  - {fileID: 161067868}
+  - {fileID: 510193037}
   OnCharacterRayCast:
     m_PersistentCalls:
       m_Calls:
@@ -2348,6 +2352,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 200
+  canShoot: 1
   BulletPrefab: {fileID: 1865596224866458645, guid: 4fd1e70873c4a05468cc6edbec0e3751, type: 3}
   parentTransform: {fileID: 2034190458}
 --- !u!1001 &844336831

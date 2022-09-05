@@ -6,7 +6,7 @@ public class Spawner : MonoBehaviour
 {
     [SerializeField] private EnemyController enemyController;
     [SerializeField] private float minPlayerDistance=12f, maxPlayerDistance=15f;
-    [SerializeField] private Transform parentTransform;
+    [SerializeField] private Transform[] parentTransforms;
     [SerializeField] private float spawnInterval = 5f;
     private float timePassed = 0f;
     [SerializeField] private float spawnIntervalMultiplier = 0.95f;
@@ -33,30 +33,42 @@ public class Spawner : MonoBehaviour
         }
     }
 
+    private float z=0f, g=0f;
+
     // spawns a random spawn object based on its chance
     public void SpawnRandom()
     {
         float randomNumber = UnityEngine.Random.Range(0f, chanceSum);
         float tempSum = 0f;
 
-        foreach (SpawnObject spawnObject in spawnList)
+        //foreach (SpawnObject spawnObject in spawnList)
+        for (int i=0; i<spawnList.Count; i++)
         {
-            tempSum += spawnObject.spawnChance;
+            tempSum += spawnList[i].spawnChance;
+
             if (randomNumber<=tempSum)
             {
+                if (i==0)
+                    z += 1f;
+                else
+                    g += 1f;
+                Debug.Log("z/g: "+z/g);
+
                 Vector3 spawnLocation = new Vector3();
                 spawnLocation.y = 0f;
                 spawnLocation.x = (UnityEngine.Random.Range(0,2)==0 ? 1:-1) * UnityEngine.Random.Range(minPlayerDistance, maxPlayerDistance);
                 spawnLocation.z = (UnityEngine.Random.Range(0,2)==0 ? 1:-1) * UnityEngine.Random.Range(minPlayerDistance, maxPlayerDistance);
 
                 bool shouldAdd;
-                GameObject obj = PoolsManager.Instance.Get(spawnObject.poolingID, out shouldAdd);
+                GameObject obj = PoolsManager.Instance.Get(spawnList[i].poolingID, out shouldAdd);
                 obj.SetActive(true);
                 obj.transform.position = spawnLocation;
-                obj.transform.SetParent(parentTransform);
+                obj.transform.SetParent(parentTransforms[i]);
                 if (shouldAdd)
                     enemyController.characters.Add(obj.GetComponent<Character>());
-                //enemyController.characters.Add(Instantiate(spawnObject.gameObject, spawnLocation, Quaternion.identity, parentTransform).GetComponent<Character>());
+                //enemyController.characters.Add(Instantiate(spawnList[i].gameObject, spawnLocation, Quaternion.identity, parentTransform).GetComponent<Character>());
+
+                break;
             }
         }
     }
