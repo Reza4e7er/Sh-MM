@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using CodeMonkey.Utils;
 
-public class ZombieAttack : MonoBehaviour, IAttack
+public class MeleeAttack : MonoBehaviour, IAttack
 {
     //private Character character;
     [SerializeField] private float damageAmount = 1f;

@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ZombiesPool : GenericObjectPool<Character>
+public interface IAbilitySet
 {
+    void Ability1() {}
+    void Ability2() {}
 }

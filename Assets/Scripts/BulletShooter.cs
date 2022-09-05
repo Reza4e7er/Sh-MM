@@ -5,6 +5,7 @@ using UnityEngine;
 public class BulletShooter : MonoBehaviour
 {
     public float speed;
+    public bool canShoot = true;
     public GameObject BulletPrefab;
     [SerializeField] private Transform parentTransform;
     //public PlayerController pl;
@@ -17,11 +18,14 @@ public class BulletShooter : MonoBehaviour
 
     void Update()
     {
-        time1 += Time.deltaTime;
-        if (time1 > TimeFire)
+        if (canShoot)
         {
-            time1 = 0f;
-            Shoot();
+            time1 += Time.deltaTime;
+            if (time1 > TimeFire)
+            {
+                time1 = 0f;
+                Shoot();
+            }
         }
     }
     public void Shoot()
@@ -32,6 +36,6 @@ public class BulletShooter : MonoBehaviour
         bullet.transform.position = firePoint.position;
         bullet.transform.rotation = firePoint.rotation;
         bullet.transform.SetParent(parentTransform);
-        bullet.GetComponent<Rigidbody>().AddForce(firePoint.forward*speed);
+        //bullet.GetComponent<Rigidbody>().AddForce(firePoint.forward*speed);
     }
 }

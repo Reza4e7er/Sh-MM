@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5432898286460850510}
   - component: {fileID: 3577872719751706701}
   - component: {fileID: 510032192719991084}
-  - component: {fileID: 6430580980887149974}
+  - component: {fileID: 1215894605626413900}
   m_Layer: 0
   m_Name: Zombie
   m_TagString: Enemy
@@ -53,7 +53,9 @@ MonoBehaviour:
   moveDirection: {x: 0, y: 1}
   poolingID: 1
   isPlayer: 0
+  characterType: 0
   isAttacking: 0
+  attackRange: 1
   baseMoveSpeed: 0.8
   currentMoveSpeed: 0
   maxHealth: 10
@@ -74,7 +76,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 52
+  m_Constraints: 84
   m_CollisionDetection: 0
 --- !u!136 &510032192719991084
 CapsuleCollider:
@@ -90,7 +92,7 @@ CapsuleCollider:
   m_Height: 0.97987795
   m_Direction: 1
   m_Center: {x: 0, y: 0.49672818, z: -0.025440514}
---- !u!114 &6430580980887149974
+--- !u!114 &1215894605626413900
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -190,6 +192,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 95204435929642878, guid: e45a69c421144304c8d8176026d3fd7b, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 7873b162a7fff2540ab8536dde2e46fc, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e45a69c421144304c8d8176026d3fd7b, type: 3}
 --- !u!4 &1162707542792754101 stripped

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,6 +14,7 @@ public class PlayerController : MonoBehaviour
 
     public static bool isInvincible = false;
     public static float invincibleTime = 2f;
+    private CharacterType currentPlayerType;
     [SerializeField] private float moveSpeedMult = 1.5f;
     [SerializeField] private float healthBarSizeMult = 1.2f;
 
@@ -22,35 +24,32 @@ public class PlayerController : MonoBehaviour
     private Vector2 playerLastDir = Vector2.up;
     private Vector2 playerDir;
 
-    // private void Awake()
-    // {
-    //     inputManager = GetComponent<InputManager>();
-    // }
+    private Action Ability1Action;
+    private Action Ability2Action;
+
+    private BulletShooter bulletShooter;
+
+
+    private void Awake()
+    {
+        bulletShooter = GetComponent<BulletShooter>();
+    }
 
     private void Start()
     {
+        abilitySets.Add(new ZombieAbilitySet());
+        abilitySets.Add(new GolemAbilitySet());
+
         PlayerController.player = playerCharcterScript;
         SetAsPlayer(ref player);
+
+        Ability1Action = abilitySets[0].Ability1;
+        Ability2Action = abilitySets[0].Ability2;
     }
 
     // called by the MainController to calculate the player direction
     public void Calculate()
     {
-        // change players' direction based on input
-        // switch (inputManager.directionState)
-        // {
-        //     case DirectionState.Forward:
-        //         playerDir = playerLastDir;
-        //         break;
-        //     case DirectionState.Right:
-        //         playerDir = Quaternion.Euler(0,0,turnSpeed*Time.deltaTime)*playerLastDir;
-        //         break;
-        //     case DirectionState.Left:
-        //         playerDir = Quaternion.Euler(0,0,-turnSpeed*Time.deltaTime)*playerLastDir;
-        //         break;
-        //     default:
-        //         break;
-        // }
         playerDir = inputManager.inputVector;
         //playerDir.Normalize();
 
@@ -76,7 +75,7 @@ public class PlayerController : MonoBehaviour
     private void SetAsPlayer(ref Character character)
     {
         isInvincible = true;
-        FunctionTimer.Create(()=>{isInvincible=false;}, invincibleTime);
+        FunctionTimer.Create(()=>{isInvincible=false;}, invincibleTime, "Invincible");
 
         player = character;
         player.gameObject.tag = playerTag;
@@ -109,11 +108,43 @@ public class PlayerController : MonoBehaviour
     {
         UnsetAsPlayer();
         SetAsPlayer(ref character);
+        if (currentPlayerType!=character.characterType)
+        {
+            currentPlayerType = character.characterType;
+            Debug.Log("changed types:"+currentPlayerType.ToString());
+            Ability1Action = abilitySets[(int)currentPlayerType].Ability1;
+            Ability2Action = abilitySets[(int)currentPlayerType].Ability2;
+
+            if (currentPlayerType==CharacterType.Zombie)
+                bulletShooter.canShoot = true;
+            else
+                bulletShooter.canShoot = false;
+        }
         player.transform.tag = "Player";
     }
 
     public void DamageTest()
     {
         player.ApplyDamage(2f);
+    }
+
+
+    //******Abilities******
+    //[Header("Abilities")]
+    private List<IAbilitySet> abilitySets = new List<IAbilitySet>();
+    
+
+    // calls the first ability
+    public void Ability1()
+    {
+        if (Ability1Action!=null)
+            Ability1Action();
+    }
+
+    // calls the second ability
+    public void Ability2()
+    {
+        if (Ability2Action!=null)
+            Ability2Action();
     }
 }

@@ -9,7 +9,9 @@ public class Character : MonoBehaviour, IPoolable
     public int PoolingID{ get; set;}
     public GameObject ThisGameObject{get{return gameObject;}}
     public bool isPlayer = false;
+    public CharacterType characterType = CharacterType.Zombie;
     public bool isAttacking = false;
+    public float attackRange = 1f;
     public float baseMoveSpeed = 1f;
     public float currentMoveSpeed;
     [SerializeField] private float maxHealth = 10f;
@@ -97,3 +99,10 @@ public class Character : MonoBehaviour, IPoolable
         PoolsManager.Instance.ReturnToPool(gameObject, poolingID);
     }
 }
+
+
+public enum CharacterType
+{
+    Zombie,
+    Golem
+};
