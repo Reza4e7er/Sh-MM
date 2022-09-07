@@ -42,6 +42,7 @@ public class PlayerController : MonoBehaviour
         // abilitySets.Add(new ZombieAbilitySet());
         // abilitySets.Add(new GolemAbilitySet());
         abilitySets.Add(new WizardAbilitySet());
+        abilitySets.Add(new GolemAbilitySet());
 
         PlayerController.player = playerCharcterScript;
         SetAsPlayer(ref player);
@@ -119,8 +120,10 @@ public class PlayerController : MonoBehaviour
             Debug.Log("changed types:"+currentPlayerType.ToString());
             Ability1Action = abilitySets[(int)currentPlayerType].Ability1;
             Ability2Action = abilitySets[(int)currentPlayerType].Ability2;
+            AbilityPassiveAction = abilitySets[0].AbilityPassive;
+            passiveChance = abilitySets[0].PassiveChance;
 
-            if (currentPlayerType==CharacterType.Zombie)
+            if (currentPlayerType==CharacterType.Wizard)
                 bulletShooter.canShoot = true;
             else
                 bulletShooter.canShoot = false;

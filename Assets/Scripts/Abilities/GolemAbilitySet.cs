@@ -15,7 +15,9 @@ public class GolemAbilitySet : IAbilitySet
         Collider[] hits = Physics.OverlapSphere(PlayerController.player.transform.position,raduis);
         foreach(var hit in hits){
             if(hit.tag == "Enemy"){
-                hit.GetComponent<Character>().ApplyDamage(mdamage);
+                Character hitCharacter = hit.GetComponent<Character>();
+                hitCharacter.ApplyDamage(mdamage);
+                hitCharacter.ApplyKnockBack(15f, PlayerController.player.transform.position);
             }
         }
     }

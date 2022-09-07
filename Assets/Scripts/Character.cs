@@ -10,7 +10,7 @@ public class Character : MonoBehaviour, IPoolable
     public int PoolingID{ get; set;}
     public GameObject ThisGameObject{get{return gameObject;}}
     public bool isPlayer = false;
-    public CharacterType characterType = CharacterType.Zombie;
+    public CharacterType characterType = CharacterType.Wizard;
     public bool isAttacking = false;
     public bool isStunned = false;
     private float stunTimeLeft = 0f;
@@ -133,6 +133,19 @@ public class Character : MonoBehaviour, IPoolable
         isFrozen = false;
     }
 
+    // applies a knock back to this character relative to the given position
+    public void ApplyKnockBack(float force, Vector3 pos)
+    {
+        Vector3 calculatedForce = new Vector3(
+                            transform.position.x-pos.x,
+                            0f,
+                            transform.position.z-pos.z
+                            );
+        calculatedForce.Normalize();
+
+        _rigidbody.AddForce(calculatedForce, ForceMode.Impulse);
+    }
+
     // updates this characters health bar
     public void UpdateHealthBar()
     {
@@ -151,6 +164,6 @@ public class Character : MonoBehaviour, IPoolable
 
 public enum CharacterType
 {
-    Zombie,
+    Wizard,
     Golem
 };
