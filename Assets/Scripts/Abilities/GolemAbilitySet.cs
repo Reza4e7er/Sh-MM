@@ -22,8 +22,11 @@ public class GolemAbilitySet : IAbilitySet
     public void Ability1(){
         Debug.Log("Golem Ability 1");
         AreaAttack(mdamage);
+
     }
     public void Ability2(){
         Debug.Log("Golem Ability 2");
     }
+
+    public void AbilityPassive() {}
 }

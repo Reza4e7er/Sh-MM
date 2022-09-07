@@ -4,6 +4,7 @@ using UnityEngine;
 
 public interface IAbilitySet
 {
-    void Ability1() {}
-    void Ability2() {}
+    void Ability1();
+    void Ability2();
+    void AbilityPassive();
 }

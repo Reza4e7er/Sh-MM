@@ -5,16 +5,19 @@ using CodeMonkey.Utils;
 
 public class MeleeAttack : MonoBehaviour, IAttack
 {
-    //private Character character;
+    [SerializeField]
+    private float attackSpeed = 1f;
+    public float AttackSpeed {get; set;}
     [SerializeField] private float damageAmount = 1f;
     [SerializeField] private float attackTime = 1f;
     [HideInInspector] public Character Character { get; set;}
 
     public void AttackAsEnemy()
     {
+        Character.animator.SetFloat("AttackSpeed", attackSpeed);
         Character.animator.SetTrigger("Attack");
         Character.isAttacking = true;
-        FunctionTimer.Create(AttackAsEnemyEnd, attackTime);
+        FunctionTimer.Create(AttackAsEnemyEnd, attackTime/attackSpeed);
     }
     private void AttackAsEnemyEnd()
     {

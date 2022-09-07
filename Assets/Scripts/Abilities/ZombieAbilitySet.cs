@@ -15,6 +15,8 @@ public class ZombieAbilitySet : IAbilitySet
         ZombieAbility2();
     }
 
+    public void AbilityPassive() {}
+
     [SerializeField] private float a1InvincibilityTime = 5f;
     [SerializeField] private float a2SpeedMult = 2f;
     [SerializeField] private float a2SpeedMultTime = 5f;
