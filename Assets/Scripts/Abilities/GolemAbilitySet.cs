@@ -6,6 +6,10 @@ public class GolemAbilitySet : IAbilitySet
 {
     public float mdamage = 3f;
     public float raduis = 2f;
+
+    public float PassiveChance { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
+    public bool PassiveSuccessful { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
+
     private void AreaAttack(float maindamage)
     {
         Collider[] hits = Physics.OverlapSphere(PlayerController.player.transform.position,raduis);

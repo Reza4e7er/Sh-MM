@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using CodeMonkey.Utils;
 
 public class Character : MonoBehaviour, IPoolable
 {
@@ -11,6 +12,10 @@ public class Character : MonoBehaviour, IPoolable
     public bool isPlayer = false;
     public CharacterType characterType = CharacterType.Zombie;
     public bool isAttacking = false;
+    public bool isStunned = false;
+    private float stunTimeLeft = 0f;
+    public bool isFrozen = false;
+    private float frozenTimeLeft = 0f;
     public float attackRange = 1f;
     public float baseMoveSpeed = 1f;
     public float currentMoveSpeed;
@@ -57,14 +62,31 @@ public class Character : MonoBehaviour, IPoolable
 
     private void Update()
     {
-        if (!isAttacking)
+        if (!(isStunned||isFrozen))
         {
-            // move the character
-            _rigidbody.MovePosition(transform.position+new Vector3(moveDirection.x, 0f, moveDirection.y)*Time.deltaTime*currentMoveSpeed);
+            if (!isAttacking)
+            {
+                // move the character
+                _rigidbody.MovePosition(transform.position+new Vector3(moveDirection.x, 0f, moveDirection.y)*Time.deltaTime*currentMoveSpeed);
+            }
+            // rotate the character
+            _rigidbody.MoveRotation(Quaternion.Euler(0f, Mathf.Atan2(moveDirection.x, moveDirection.y)*Mathf.Rad2Deg, 0f));
         }
-        // rotate the character
-        _rigidbody.MoveRotation(Quaternion.Euler(0f, Mathf.Atan2(moveDirection.x, moveDirection.y)*Mathf.Rad2Deg, 0f));
-    
+        else
+        {
+            if (isStunned)
+            {
+                stunTimeLeft -= Time.deltaTime;
+                if (stunTimeLeft<=0f)
+                    EndStun();
+            }
+            if (isFrozen)
+            {
+                frozenTimeLeft -= Time.deltaTime;
+                if (frozenTimeLeft<=0f)
+                    EndFreeze();
+            }
+        }
     }
 
     // based on isPlayer calls an attack function
@@ -83,6 +105,32 @@ public class Character : MonoBehaviour, IPoolable
         UpdateHealthBar();
         if (health<=0f)
             Die();
+    }
+
+    // stuns the character for the given duration
+    public void ApplyStun(float duration)
+    {
+        isStunned = true;
+        stunTimeLeft = duration;
+    }
+
+    // called when the stun ends
+    private void EndStun()
+    {
+        isStunned = false;
+    }
+
+    // freezes the character for the given duration
+    public void ApplyFreeze(float duration)
+    {
+        isFrozen = true;
+        frozenTimeLeft = duration;
+    }
+
+    // called when the freeze ends
+    private void EndFreeze()
+    {
+        isFrozen = false;
     }
 
     // updates this characters health bar

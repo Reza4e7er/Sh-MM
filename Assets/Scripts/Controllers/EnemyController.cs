@@ -32,7 +32,7 @@ public class EnemyController : MonoBehaviour
         {
             newDir.x = target.position.x - characters[j].transform.position.x;
             newDir.y = target.position.z - characters[j].transform.position.z;
-            if (!characters[j].isPlayer && !characters[j].isAttacking && newDir.magnitude<=characters[j].attackRange)
+            if (!characters[j].isPlayer && !characters[j].isStunned && !characters[j].isFrozen && !characters[j].isAttacking && newDir.magnitude<=characters[j].attackRange)
                 characters[j].Attack();
             newDir.Normalize();
             characters[j].moveDirection = newDir;

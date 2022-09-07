@@ -52,7 +52,6 @@ public class Spawner : MonoBehaviour
                     z += 1f;
                 else
                     g += 1f;
-                Debug.Log("z/g: "+z/g);
 
                 Vector3 spawnLocation = new Vector3();
                 spawnLocation.y = 0f;

@@ -21,6 +21,9 @@ public class ZombieAbilitySet : IAbilitySet
     [SerializeField] private float a2SpeedMult = 2f;
     [SerializeField] private float a2SpeedMultTime = 5f;
 
+    public float PassiveChance { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
+    public bool PassiveSuccessful { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
+
     // makes the player invincible for some time
     public void ZombieAbility1()
     {

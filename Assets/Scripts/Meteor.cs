@@ -1,16 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using CodeMonkey.Utils;
 
-public class Bullet : MonoBehaviour, IPoolable
+public class Meteor : MonoBehaviour, IPoolable
 {
     [SerializeField] private int poolingID;
     public int PoolingID{get; set;}
     public GameObject ThisGameObject{get{return gameObject;}}
     [SerializeField] private float moveSpeed = 1f;
     [SerializeField] private float damage = 3f;
-    [SerializeField] private int penitration = 1;
+    [SerializeField] private float explosionRange = 2.5f;
     [SerializeField] private float activeTime = 10f;
     private float time = 0f;
 
@@ -24,7 +23,7 @@ public class Bullet : MonoBehaviour, IPoolable
 
     private void Update()
     {
-        transform.localPosition += transform.forward*moveSpeed*Time.deltaTime;
+        transform.localPosition -= transform.up*moveSpeed*Time.deltaTime;
         //transform.Translate(Vector3.forward*moveSpeed*Time.deltaTime, )
         time += Time.deltaTime;
         if (time>=activeTime)
@@ -33,18 +32,17 @@ public class Bullet : MonoBehaviour, IPoolable
 
     private void OnTriggerEnter(Collider coll)
     {
-        if (coll.gameObject.tag=="Enemy")
-        {
-            coll.GetComponent<Character>().ApplyDamage(damage);
-
-            penitration--;
-            if (penitration<=0)
-                DestroyBullet();
+        Collider[] hits = Physics.OverlapSphere(PlayerController.player.transform.position,explosionRange);
+        foreach(var hit in hits){
+            if(hit.tag == "Enemy"){
+                hit.GetComponent<Character>().ApplyDamage(damage);
+            }
         }
+        DestroyBullet();
     }
 
     // called whenever bullet should be disabled
-    public void DestroyBullet()
+    private void DestroyBullet()
     {
         PoolsManager.Instance.ReturnToPool(gameObject, poolingID);
     }

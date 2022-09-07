@@ -26,6 +26,8 @@ public class PlayerController : MonoBehaviour
 
     private Action Ability1Action;
     private Action Ability2Action;
+    public static Action AbilityPassiveAction;
+    public static float passiveChance;
 
     private BulletShooter bulletShooter;
 
@@ -37,14 +39,17 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
-        abilitySets.Add(new ZombieAbilitySet());
-        abilitySets.Add(new GolemAbilitySet());
+        // abilitySets.Add(new ZombieAbilitySet());
+        // abilitySets.Add(new GolemAbilitySet());
+        abilitySets.Add(new WizardAbilitySet());
 
         PlayerController.player = playerCharcterScript;
         SetAsPlayer(ref player);
 
         Ability1Action = abilitySets[0].Ability1;
         Ability2Action = abilitySets[0].Ability2;
+        AbilityPassiveAction = abilitySets[0].AbilityPassive;
+        passiveChance = abilitySets[0].PassiveChance;
     }
 
     // called by the MainController to calculate the player direction

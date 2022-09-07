@@ -10,6 +10,8 @@ public class BulletShooter : MonoBehaviour
     [SerializeField] private Transform parentTransform;
     //public PlayerController pl;
     float time1, TimeFire;
+
+    public static Bullet lastBullet;
     void Start()
     {
         time1 = 0f;
@@ -36,6 +38,12 @@ public class BulletShooter : MonoBehaviour
         bullet.transform.position = firePoint.position;
         bullet.transform.rotation = firePoint.rotation;
         bullet.transform.SetParent(parentTransform);
-        //bullet.GetComponent<Rigidbody>().AddForce(firePoint.forward*speed);
+        
+        lastBullet = bullet;
+
+        if (UnityEngine.Random.Range(0f, 1f)<=PlayerController.passiveChance)
+        {
+            PlayerController.AbilityPassiveAction();
+        }
     }
 }
