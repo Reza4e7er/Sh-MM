@@ -7,6 +7,7 @@ public class EnemyController : MonoBehaviour
     public Transform target;
     //[SerializeField] private float maxDistanceToPlayerToAccack = 1f;
     public List<Character> characters;
+    [SerializeField] private float enemyTurnSpeed = 5f;
 
     public int groupsCount = 3;
     private int groupsI = 0;
@@ -32,10 +33,16 @@ public class EnemyController : MonoBehaviour
         {
             newDir.x = target.position.x - characters[j].transform.position.x;
             newDir.y = target.position.z - characters[j].transform.position.z;
-            if (!characters[j].isPlayer && !characters[j].isStunned && !characters[j].isFrozen && !characters[j].isAttacking && newDir.magnitude<=characters[j].attackRange)
-                characters[j].Attack();
-            newDir.Normalize();
-            characters[j].moveDirection = newDir;
+            if (!characters[j].isStunned && !characters[j].isFrozen && !characters[j].isAttacking)
+            {
+                if (!characters[j].isPlayer && newDir.magnitude<=characters[j].attackRange)
+                {
+                    characters[j].Attack();
+                }
+
+                newDir.Normalize();
+                characters[j].moveDirection = (Vector2) Vector3.Slerp(characters[j].moveDirection, newDir, Time.deltaTime*enemyTurnSpeed);
+            }
         }
     }
 
