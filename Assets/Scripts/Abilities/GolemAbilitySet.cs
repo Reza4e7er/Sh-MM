@@ -17,7 +17,7 @@ public class GolemAbilitySet : IAbilitySet
             if(hit.tag == "Enemy"){
                 Character hitCharacter = hit.GetComponent<Character>();
                 hitCharacter.ApplyDamage(mdamage);
-                hitCharacter.ApplyKnockBack(15f, PlayerController.player.transform.position);
+                hitCharacter.ApplyKnockBack(30f, PlayerController.player.transform.position);
             }
         }
     }

@@ -143,7 +143,7 @@ public class Character : MonoBehaviour, IPoolable
                             );
         calculatedForce.Normalize();
 
-        _rigidbody.AddForce(calculatedForce, ForceMode.Impulse);
+        _rigidbody.AddForce(calculatedForce*force, ForceMode.Impulse);
     }
 
     // updates this characters health bar
