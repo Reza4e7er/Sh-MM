@@ -21,6 +21,12 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Character playerCharcterScript;
     [SerializeField] public static Character player; // *****
     [SerializeField] private Canvas playerIndicator;
+    [SerializeField] private GameObject ghost;
+    [SerializeField] private float bodyChangeSpeed = 5f;
+    [SerializeField] private float bodyChangeTime = 0.3f;
+    [SerializeField] private float bodyChangeTimeScale = 0.3f;
+    private float bodyChangeDistance;
+    private bool currentlyChangingBodies = false;
     private Vector2 playerLastDir = Vector2.up;
     private Vector2 playerDir;
 
@@ -51,6 +57,15 @@ public class PlayerController : MonoBehaviour
         Ability2Action = abilitySets[0].Ability2;
         AbilityPassiveAction = abilitySets[0].AbilityPassive;
         passiveChance = abilitySets[0].PassiveChance;
+    }
+
+    private void Update()
+    {
+        if (currentlyChangingBodies)
+        {
+            // Debug.Log(ghost.transform.position);
+            ghost.transform.position = Vector3.Lerp(ghost.transform.position, playerIndicator.transform.position, Time.deltaTime*bodyChangeSpeed*bodyChangeDistance);
+        }
     }
 
     // called by the MainController to calculate the player direction
@@ -112,6 +127,27 @@ public class PlayerController : MonoBehaviour
     // changes players' body
     public void ChangeBody(Character character)
     {
+        currentlyChangingBodies = true;
+
+        ghost.SetActive(true);
+        // Debug.Log(ghost.transform.position);
+        ghost.transform.position = playerIndicator.transform.position;
+        ghost.transform.LookAt(character.transform.position);
+        SimpleCameraFollow.Instance.smoothMovement = true;
+        Time.timeScale = bodyChangeTimeScale;
+        bodyChangeDistance = Vector3.Distance(ghost.transform.position, character.transform.position);
+        bodyChangeDistance = (float) Math.Sqrt(bodyChangeDistance);
+        FunctionTimer.Create(
+                            () => {
+                                // Debug.Log("body change successful");
+                                ghost.SetActive(false);
+                                SimpleCameraFollow.Instance.smoothMovement = false;
+                                Time.timeScale=1f;
+                                currentlyChangingBodies=false;
+                                },
+                            bodyChangeTime, "Body Change", false, true
+                            );
+
         UnsetAsPlayer();
         SetAsPlayer(ref character);
         if (currentPlayerType!=character.characterType)
