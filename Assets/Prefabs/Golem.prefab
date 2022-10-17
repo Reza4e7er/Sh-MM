@@ -170,6 +170,8 @@ MonoBehaviour:
   isPlayer: 0
   characterType: 1
   isAttacking: 0
+  isStunned: 0
+  isFrozen: 0
   attackRange: 2
   baseMoveSpeed: 0.5
   currentMoveSpeed: 0
@@ -189,6 +191,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d28b9ef9b5ff3b43b7b26a664278c0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  attackSpeed: 1
   damageAmount: 4
   attackTime: 2
 --- !u!1 &5857592101781303026
@@ -912,11 +915,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5441917599764926129, guid: 73f581ea4afc3d646b28d076a60e5423, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 1.1409
+      value: 1.901
       objectReference: {fileID: 0}
     - target: {fileID: 5441917599764926129, guid: 73f581ea4afc3d646b28d076a60e5423, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0.2134
+      value: 0.356
       objectReference: {fileID: 0}
     - target: {fileID: 5441917599764926129, guid: 73f581ea4afc3d646b28d076a60e5423, type: 3}
       propertyPath: m_LocalPosition.x
