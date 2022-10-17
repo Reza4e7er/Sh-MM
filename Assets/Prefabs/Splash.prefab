@@ -12,9 +12,10 @@ GameObject:
   - component: {fileID: 4963916360358962991}
   - component: {fileID: 4528445507815158578}
   - component: {fileID: 633160389947487596}
-  - component: {fileID: 8265389625464861441}
+  - component: {fileID: 1542689410738338249}
+  - component: {fileID: 5995817391673830210}
   m_Layer: 0
-  m_Name: SplashArea
+  m_Name: Splash
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -98,7 +99,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &8265389625464861441
+--- !u!114 &1542689410738338249
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -107,9 +108,23 @@ MonoBehaviour:
   m_GameObject: {fileID: 6819319973631523998}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 12b5beaeb876ae643b95b73d777104ef, type: 3}
+  m_Script: {fileID: 11500000, guid: d513291ee367ecb4a89adf5f5302143a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SplashArea: {fileID: 6819319973631523998}
-  SplashSpeed: 400
-  Splashdamage: 2
+  damageAmount: 2
+--- !u!54 &5995817391673830210
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6819319973631523998}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0

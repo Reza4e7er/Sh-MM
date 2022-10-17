@@ -37,10 +37,14 @@ public class PlayerController : MonoBehaviour
 
     private BulletShooter bulletShooter;
 
+    [SerializeField] private GameObject splashPrefab;
+    public static GameObject SplashPrefab;
+
 
     private void Awake()
     {
         bulletShooter = GetComponent<BulletShooter>();
+        SplashPrefab = splashPrefab;
     }
 
     private void Start()
@@ -49,6 +53,7 @@ public class PlayerController : MonoBehaviour
         // abilitySets.Add(new GolemAbilitySet());
         abilitySets.Add(new WizardAbilitySet());
         abilitySets.Add(new GolemAbilitySet());
+        abilitySets.Add(new OgreAbilitySet());
 
         PlayerController.player = playerCharcterScript;
         SetAsPlayer(ref player);

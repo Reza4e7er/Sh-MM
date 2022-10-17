@@ -165,5 +165,6 @@ public class Character : MonoBehaviour, IPoolable
 public enum CharacterType
 {
     Wizard,
-    Golem
+    Golem,
+    Ogre
 };
