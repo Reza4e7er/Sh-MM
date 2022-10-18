@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,24 +12,31 @@ public class BulletShooter : MonoBehaviour
     //public PlayerController pl;
     float time1, TimeFire;
 
+    public Action AttackAction;
+
     public static Bullet lastBullet;
     void Start()
     {
+        AttackAction = Shoot;
         time1 = 0f;
         TimeFire = 1f;
     }
 
     void Update()
     {
-        if (canShoot)
-        {
+        // if (canShoot)
+        // {
             time1 += Time.deltaTime;
             if (time1 > TimeFire)
             {
                 time1 = 0f;
-                Shoot();
+                AttackAction();
+                if (UnityEngine.Random.Range(0f, 1f)<=PlayerController.passiveChance)
+                {
+                    PlayerController.AbilityPassiveAction();
+                }
             }
-        }
+        // }
     }
     public void Shoot()
     {
@@ -40,10 +48,10 @@ public class BulletShooter : MonoBehaviour
         bullet.transform.SetParent(parentTransform);
         
         lastBullet = bullet;
+    }
 
-        if (UnityEngine.Random.Range(0f, 1f)<=PlayerController.passiveChance)
-        {
-            PlayerController.AbilityPassiveAction();
-        }
+    public void Melee()
+    {
+        Debug.Log("Melee Attack!");
     }
 }

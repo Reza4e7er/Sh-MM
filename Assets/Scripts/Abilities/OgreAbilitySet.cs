@@ -11,7 +11,7 @@ public class OgreAbilitySet : IAbilitySet
     private bool passiveSuccessful = false;
     public bool PassiveSuccessful {get{return passiveSuccessful;} set{passiveSuccessful=value;}}
 
-    public float splashSpeed = 400f;
+    public float splashSpeed = 4f;
 
 
     public void Ability1()
@@ -32,11 +32,11 @@ public class OgreAbilitySet : IAbilitySet
 
     private void SplashDamage()
     {
-        GameObject Area = GameObject.Instantiate(PlayerController.SplashPrefab, PlayerController.player.transform.position, Quaternion.identity);
+        GameObject Area = GameObject.Instantiate(PlayerController.SplashPrefab, PlayerController.player.transform.position, PlayerController.player.transform.rotation);
         //Area.transform.position += transform.forward * SplashSpeed * Time.deltaTime;
         Rigidbody rigidbody = Area.GetComponent<Rigidbody>();
         rigidbody.AddForce(PlayerController.player.transform.forward*splashSpeed,ForceMode.Impulse);
         
-        GameObject.Destroy(Area, 1);
+        GameObject.Destroy(Area, 10);
     }
 }

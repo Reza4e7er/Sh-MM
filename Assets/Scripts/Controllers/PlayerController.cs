@@ -161,13 +161,19 @@ public class PlayerController : MonoBehaviour
             Debug.Log("changed types:"+currentPlayerType.ToString());
             Ability1Action = abilitySets[(int)currentPlayerType].Ability1;
             Ability2Action = abilitySets[(int)currentPlayerType].Ability2;
-            AbilityPassiveAction = abilitySets[0].AbilityPassive;
-            passiveChance = abilitySets[0].PassiveChance;
+            AbilityPassiveAction = abilitySets[(int)currentPlayerType].AbilityPassive;
+            passiveChance = abilitySets[(int)currentPlayerType].PassiveChance;
 
             if (currentPlayerType==CharacterType.Wizard)
-                bulletShooter.canShoot = true;
+            {
+                //bulletShooter.canShoot = true;
+                bulletShooter.AttackAction = bulletShooter.Shoot;
+            }
             else
-                bulletShooter.canShoot = false;
+            {
+                //bulletShooter.canShoot = false;
+                bulletShooter.AttackAction = bulletShooter.Melee;
+            }
         }
         player.transform.tag = "Player";
     }
