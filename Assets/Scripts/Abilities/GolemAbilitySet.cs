@@ -7,8 +7,12 @@ public class GolemAbilitySet : IAbilitySet
     public float mdamage = 3f;
     public float raduis = 2f;
 
-    public float PassiveChance { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
-    public bool PassiveSuccessful { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
+    [SerializeField]
+    private float passiveChance = 0.2f;
+    public float PassiveChance {get{return passiveChance;} set{passiveChance=value;}}
+    [SerializeField]
+    private bool passiveSuccessful = false;
+    public bool PassiveSuccessful {get{return passiveSuccessful;} set{passiveSuccessful=value;}}
 
     private void AreaAttack(float maindamage)
     {

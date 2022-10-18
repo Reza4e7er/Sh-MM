@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using CodeMonkey.Utils;
 
 public class OgreAbilitySet : IAbilitySet
 {
@@ -11,17 +12,25 @@ public class OgreAbilitySet : IAbilitySet
     private bool passiveSuccessful = false;
     public bool PassiveSuccessful {get{return passiveSuccessful;} set{passiveSuccessful=value;}}
 
+    public float speedMultAmount = 2f;
+    public float speedMultTime = 5f;
+
+    public float stunRange = 3.5f;
+    public float stunDuration = 5f;
+
     public float splashSpeed = 4f;
 
 
     public void Ability1()
     {
-        throw new System.NotImplementedException();
+        Debug.Log("Ogre Speed-up!");
+        SpeedUp();
     }
 
     public void Ability2()
     {
-        throw new System.NotImplementedException();
+        Debug.Log("Ogre Stun!");
+        Stun();
     }
 
     public void AbilityPassive()
@@ -38,5 +47,23 @@ public class OgreAbilitySet : IAbilitySet
         rigidbody.AddForce(PlayerController.player.transform.forward*splashSpeed,ForceMode.Impulse);
         
         GameObject.Destroy(Area, 10);
+    }
+
+    private void SpeedUp()
+    {
+        PlayerController.player.currentMoveSpeed *= speedMultAmount;
+        FunctionTimer.Create(()=>{PlayerController.player.currentMoveSpeed/=speedMultAmount;}, speedMultTime, "Speed Mult");
+    }
+
+    private void Stun()
+    {
+        Collider[] hits = Physics.OverlapSphere(PlayerController.player.transform.position,stunRange);
+        foreach(var hit in hits)
+        {
+            if(hit.tag == "Enemy")
+            {
+                hit.GetComponent<Character>().ApplyStun(stunDuration);
+            }
+        }
     }
 }
